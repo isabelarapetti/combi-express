@@ -1,0 +1,12 @@
+#!/bin/bash
+# init.sh
+
+set -e
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+
+CREATE DATABASE "$DB_NAME";
+CREATE USER "$DB_USER" WITH PASSWORD '$DB_PASSWORD';
+GRANT ALL ON DATABASE "$DB_NAME" TO "$DB_USER";
+
+EOSQL

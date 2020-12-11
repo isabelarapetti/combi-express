@@ -1,0 +1,23 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:10.10-alpine
+    env_file:
+      - ./credentials/pg
+    volumes:
+      - ./migrations/helpers/sql_raw/init.sh:/docker-entrypoint-initdb.d/init.sh
+    ports:
+      - 5433:5432
+
+  combiexpress-api:
+    stdin_open: true
+    tty: true
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - '8000:8000'
+    env_file:
+      - ./credentials/pg
+      - .env
+    command: bash -c "./migrate.sh && npm start"

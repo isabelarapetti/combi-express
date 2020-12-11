@@ -1,0 +1,79 @@
+{
+  "name": "combiexpress-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/bin/server.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "build:watch": "tsc --watch -p tsconfig.json",
+    "dev": "concurrently \"npm run build:watch\" \"nodemon --legacy-watch ./dist/bin/server.js\"",
+    "docker:compose": "docker-compose up --build",
+    "lint": "eslint ./src --ext .js,.ts",
+    "lint:fix": "eslint ./src --ext .js,.ts --fix",
+    "migrate": "node-pg-migrate up",
+    "migrate:create": "node-pg-migrate create",
+    "migrate:down": "node-pg-migrate down",
+    "migrate:down:all": "node-pg-migrate down 99999",
+    "migrate:redo": "concurrently \"npm run migrate:down\" \"npm run migrate\"",
+    "migrate:rebuild": "concurrently \"npm run migrate:down:all\" \"npm run migrate\"",
+    "start": "node ./dist/bin/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:watchAll": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isabelarapetti/pp3-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "await-to-js": "^2.1.1",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "helmet": "^3.22.0",
+    "http-errors": "^1.7.3",
+    "http-status-codes": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "log": "^6.0.0",
+    "node-pg-migrate": "3.23.3",
+    "npm": "^6.14.5",
+    "pg": "^7.8.0",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/helmet": "0.0.47",
+    "@types/http-errors": "^1.6.3",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/pg": "7.11.2",
+    "@types/validator": "^13.0.0",
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^4.2.5",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.0.0",
+    "typescript": "^3.9.3"
+  },
+  "engines": {
+    "node": ">=10.19.0",
+    "npm": ">=6.13.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  }
+}
